@@ -1,8 +1,8 @@
-package com.functionalgraphs
+package functionalgraphs
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import zio.json._
+import zio.json.*
 
 class GraphSpec extends AnyFlatSpec with Matchers:
 
@@ -31,7 +31,7 @@ class GraphSpec extends AnyFlatSpec with Matchers:
   }
 
   "JsonCodecs" should "sérialiser et désérialiser en JSON" in {
-    import JsonCodecs._
+    import JsonCodecs.*
     val g = DirectedGraph[Int]().addEdge(1,2,4.2)
     val dto = toDto(g)
     val json = dto.toJson
