@@ -9,6 +9,7 @@ lazy val root = (project in file("."))
       "dev.zio"       %% "zio-json"   % "0.6.0",
       "org.scalatest" %% "scalatest"  % "3.2.16" % Test
     ),
-    Test / fork := true
     //
+    Test / fork := true
+
   )
