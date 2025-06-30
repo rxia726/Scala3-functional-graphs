@@ -1,4 +1,4 @@
-package com.functionalgraph
+package com.functionalgraphs
 
 /** Implémentation de graphe dirigé basée sur un dictionnaire d’adjacence */
 case class DirectedGraph[A](adj: Map[A, Map[A, Double]] = Map.empty[A, Map[A, Double]]) extends Graph[A]:

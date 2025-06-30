@@ -1,4 +1,4 @@
-package com.functionalgraph
+package com.functionalgraphs
 
 /** Graphe non orienté : on ajoute/supprime chaque arête dans les deux sens */
 

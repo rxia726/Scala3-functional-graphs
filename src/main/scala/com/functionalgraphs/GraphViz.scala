@@ -1,4 +1,4 @@
-package com.functionalgraph
+package com.functionalgraphs
 
 /** Extension pour générer une représentation DOT (GraphViz) */
 extension [A](g: Graph[A])

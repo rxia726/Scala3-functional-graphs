@@ -1,4 +1,4 @@
-package com.functionalgraph
+package com.functionalgraphs
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
