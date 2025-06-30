@@ -26,7 +26,7 @@ class GraphSpec extends AnyFlatSpec with Matchers:
     val ug = UndirectedGraph[String]()
       .addEdge("A","B", 1.0)
 
-    ug.edges should contain only ("A","B",1.0)
+    ug.edges should contain only (("A","B",1.0))
     ug.neighbors("B") should contain ("A" -> 1.0)
   }
 

@@ -1,19 +1,32 @@
 package com.functionalgraphs
 
+import scala.math.Ordering
+
 /** Graphe non orienté : on ajoute/supprime chaque arête dans les deux sens */
+case class UndirectedGraph[A](
+                               adj: Map[A, Map[A, Double]] = Map.empty[A, Map[A, Double]]
+                             )(implicit ord: Ordering[A]) extends Graph[A]:
 
-case class UndirectedGraph[A](adj: Map[A, Map[A, Double]] = Map.empty[A, Map[A, Double]]) extends Graph[A]:
-  private val dg = DirectedGraph(adj)
+  // on construit un graphe dirigé de référence
+  private val dg = DirectedGraph[A](adj)
 
-  /** Sommets identiques à ceux du graphe dirigé sous-jacent */
-  override def vertices: Set[A] = dg.vertices
+  /** Sommets identiques à ceux du graphe dirigé */
+  override def vertices: Set[A] =
+    dg.vertices
 
-  /** On ne garde qu’une seule orientation par arête pour éviter les doublons */
+  /** Normalise chaque arête en (min, max, w) puis déduplique via Set */
   override def edges: Set[(A, A, Double)] =
-    dg.edges.filter { case (u, v, _) => u.hashCode <= v.hashCode }
+    dg.edges.foldLeft(Set.empty[(A, A, Double)]) {
+      case (acc, (u, v, w)) =>
+        val normed =
+          if ord.lteq(u, v) then (u, v, w)
+          else                   (v, u, w)
+        acc + normed
+    }
 
   /** Voisins identiques */
-  override def neighbors(v: A): Map[A, Double] = dg.neighbors(v)
+  override def neighbors(v: A): Map[A, Double] =
+    dg.neighbors(v)
 
   /** Ajoute l’arête dans les deux sens */
   override def addEdge(u: A, v: A, w: Double): Graph[A] =
