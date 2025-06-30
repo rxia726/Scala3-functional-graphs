@@ -1,7 +1,7 @@
-package com.functionalgraphs
+package com.functionalgraph
 
 /** Implémentation de graphe dirigé basée sur un dictionnaire d’adjacence */
-case class DirectedGraph[A](adj: Map[A, Map[A, Double]] = Map.empty) extends Graph[A]:
+case class DirectedGraph[A](adj: Map[A, Map[A, Double]] = Map.empty[A, Map[A, Double]]) extends Graph[A]:
 
   /** Ensemble des sommets (clés + cibles) */
   override def vertices: Set[A] =

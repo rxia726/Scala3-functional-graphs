@@ -1,4 +1,4 @@
-package com.functionalgraphs
+package com.functionalgraph
 
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 

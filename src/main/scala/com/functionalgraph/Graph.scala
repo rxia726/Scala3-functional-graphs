@@ -1,4 +1,4 @@
-package com.functionalgraphs
+package com.functionalgraph
 
 /** Interface paramétrée pour représenter un graphe générique */
 trait Graph[A]:

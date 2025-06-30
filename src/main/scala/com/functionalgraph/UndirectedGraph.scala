@@ -1,7 +1,8 @@
-package com.functionalgraphs
+package com.functionalgraph
 
 /** Graphe non orienté : on ajoute/supprime chaque arête dans les deux sens */
-case class UndirectedGraph[A](adj: Map[A, Map[A, Double]] = Map.empty) extends Graph[A]:
+
+case class UndirectedGraph[A](adj: Map[A, Map[A, Double]] = Map.empty[A, Map[A, Double]]) extends Graph[A]:
   private val dg = DirectedGraph(adj)
 
   /** Sommets identiques à ceux du graphe dirigé sous-jacent */
