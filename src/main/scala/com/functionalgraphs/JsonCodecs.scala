@@ -19,7 +19,7 @@ object JsonCodecs:
     GraphDto(g.vertices.toList, g.edges.toList)
 
   /** Reconstruit un DirectedGraph[A] à partir d’un GraphDto[A] */
-  def fromDto[A](dto: GraphDto[A]): DirectedGraph[A] =
-    dto.edges.foldLeft(DirectedGraph[A]()) { case (graph, (u, v, w)) =>
+  def fromDto[A](dto: GraphDto[A]): Graph[A] =
+    dto.edges.foldLeft(DirectedGraph[A](Map.empty): Graph[A]) { case (graph, (u, v, w)) =>
       graph.addEdge(u, v, w)
     }
