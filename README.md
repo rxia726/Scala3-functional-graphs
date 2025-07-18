@@ -2,6 +2,10 @@
 
 This project is a comprehensive implementation of a functional graph library in Scala 3. It includes a core library for immutable graph data structures, a suite of classic graph algorithms, and an interactive ZIO-based console application.
 
+## Group Members
+
+LIU Pei, XIA Ruixiang, RAMANANTSALAMA Matthieu
+
 ## Project Overview
 
 The project is architected to showcase a clean separation of concerns, adherence to functional programming paradigms, and robust testing. It is composed of two primary modules:
