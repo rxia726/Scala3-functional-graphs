@@ -1,152 +1,200 @@
-# Functional Programming in Scala 3 - Functional Graphs
+# Functional Graphs in Scala 3
 
-Welcome to the final project for your Functional Programming in Scala 3 class. This project is designed to assess your understanding and application of functional programming principles. The grading will be based on the proper behavior of the implementation, adherence to functional programming principles, test coverage, project organization and the quality and completeness of the documentation.
-
-**Target Skills: [C201], [C202]**
-
-**Project Deadline: Friday, 18 July 2025**
+This project is a comprehensive implementation of a functional graph library in Scala 3. It includes a core library for immutable graph data structures, a suite of classic graph algorithms, and an interactive ZIO-based console application.
 
 ## Project Overview
 
-You will design and implement a graph data structure library with various operations, integrate it into a ZIO 2 application and document your work comprehensively. The project will involve the following key components:
+The project is architected to showcase a clean separation of concerns, adherence to functional programming paradigms, and robust testing. It is composed of two primary modules:
 
-1. **Graph Data Structure**
-2. **Graph Operations**
-3. **ZIO 2 Application Integration**
-4. **Comprehensive Documentation**
+*   **`core`**: A reusable, standalone library containing the core logic.
+  *   A generic `Graph[A]` trait defining the fundamental contract for a graph.
+  *   Immutable `DirectedGraph` and `UndirectedGraph` implementations.
+  *   Type-safe, tail-recursive implementations of standard graph algorithms:
+    *   Depth-First Search (DFS)
+    *   Breadth-First Search (BFS)
+    *   Cycle Detection
+    *   Dijkstra's Algorithm for shortest paths
+  *   Utilities for serialization to JSON (via `zio-json`) and GraphViz DOT format.
 
-## Detailed Instructions
-
-### 1. Graph Data Structure
-
-#### Data Structure Design
-
-A [graph](https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/) is a collection of vertices (nodes) and edges (connections between nodes). A graph can be directed (edges have a direction) or undirected (edges have no direction). Graph can have weights (values) associated with edges, to represent the cost or distance between vertices.
-
-- **Task**: Design an interface to represent a graph, parameterized by type.
-- **Examples of Methods to Implement**:
-    - Get all vertices
-    - Get all edges
-    - Get neighbors of a given vertex
-    - Add an edge
-    - Remove an edge
-
-#### Implementations
-
-Different types of graphs include:
-
-1. **Directed Graph (Digraph)**: Edges have a direction, going from one vertex to another.
-1. **Undirected Graph**: Edges have no direction, connecting two vertices bidirectionally.
-1. **Weighted Edges**: To simplify the design of this project, edges will always have weights.
-
-
-- **Task**: Implement the defined interface for the following types of graphs:
-    - Directed Graph (Digraph)
-    - Undirected Graph
-
-#### JSON Encoding/Decoding
-
-JSON (JavaScript Object Notation) is a lightweight data interchange format. Encoding and decoding involve converting
-between graph objects and their JSON representations.
-
-- **Task**: Implement a way to encode and decode graphs from and to JSON.
-- **Hint**: Use the `zio-json` library for JSON handling.
-
-#### GraphViz Representation
-
-[GraphViz](https://graphviz.org) is a tool for visualizing graphs. Generating a GraphViz representation involves
-creating a textual description of the graph in the DOT language.
-
-- **Task**: Implement a way to generate a GraphViz representation of a graph.
-- **Hint**: Use **implicit extensions** and consider the `foldLeft` method in the Scala collections standard library.
-
-#### Testing
-
-Ensure the implemented data structures work as expected by writing unit tests.
-
-- **Task**: Implement unit tests to ensure the correctness of the above implementations.
-- **Hint**: Use ScalaTest [FlatSpec](https://www.scalatest.org/user_guide/selecting_a_style) style for writing unit tests.
-
-### 2. Graph Operations
-
-- **Hint**: Make the following implementation independent of the notion of graph from the previous section.
-
-#### Depth First Search (DFS)
-
-DFS is an algorithm for traversing or searching tree or graph data structures. It starts at a source vertex and explores
-as far as possible along each branch before backtracking.
-
-- **Task**: Implement and test DFS.
-- **Hint**: Provide a tail recursive solution.
-
-#### Breadth First Search (BFS)
-
-BFS is an algorithm for traversing or searching tree or graph data structures. It starts at a source vertex and explores
-all the neighbor vertices at the present depth before moving on to vertices at the next depth level.
-
-- **Task**: Implement and test BFS.
-- **Hint**: Provide a tail recursive solution.
-
-#### Cycle Detection
-
-Cycle detection in a graph is the process of finding a cycle (a path of edges and vertices wherein a vertex is reachable
-from itself).
-
-- **Task**: Use DFS to detect cycles in a graph.
-- **Hint**: Provide a tail recursive solution.
-
-#### Dijkstra's Algorithm
-
-Dijkstra’s algorithm is used for finding the shortest path from a single source vertex to all other vertices in a
-weighted graph with non-negative weights.
-
-- **Task**: Implement and test Dijkstra's algorithm for shortest paths.
-
-#### Testing
-
-Ensure the implemented operations work as expected by writing unit tests.
-
-- **Task**: Implement unit tests to ensure the correctness of the above implementations.
-- **Hint**: Use ScalaTest [FlatSpec](https://www.scalatest.org/user_guide/selecting_a_style) style for writing unit tests.
-
-### 3. ZIO 2 Application Integration
-
-#### Application Design
-
-[ZIO](https://zio.dev/) is a library for asynchronous and concurrent programming in Scala. It simplifies handling side-effects in functional
-programming.
-
-- **Task**: Integrate the core library and operations into a terminal-based interactive ZIO 2 application.
-- **Hint**: Start with the [Getting Started with ZIO](https://zio.dev/overview/getting-started/) tutorial to learning how to create your first ZIO 2 application.
-- **Hint**: Use the previous work to ease graph construction.
-- **Hint**: Choose a scenario and a type for your nodes (you can create your own case classes).
+*   **`app`**: A terminal-based interactive application.
+  *   Built using ZIO 2 to manage application state and side effects (like console I/O) in a purely functional manner.
+  *   Provides a command-line interface to interactively build a graph and run algorithms on it.
 
 ## Project Organization
 
-- **Use `sbt` subprojects**: Separate the core library from the ZIO application using [subprojects](https://www.scala-sbt.org/1.x/docs/Multi-Project.html#Build-wide+settings).
-- **Scala Worksheets**: Use Scala worksheets in addition to unit tests to experiment and validate implementations.
-- **Version Control**: Use Git for version control throughout the project. Regularly commit your changes and use meaningful commit messages.
+The project utilizes SBT subprojects to maintain a clear and logical structure, separating the reusable library from the specific application that consumes it.
 
-## Documentation
+*   `core/`: Contains the graph data structures, algorithms, and related utilities. This module has no dependencies on the `app` and could be published as a standalone library.
+*   `app/`: Contains the ZIO application. It depends on `core` to perform its graph-related tasks.
 
-### README Requirements
+This modular design promotes reusability, simplifies dependency management, and makes the codebase easier to navigate and maintain.
 
-Your README should be comprehensive and include:
+## Core Concepts & Design Decisions
 
-- **Project Overview**: Brief description of the project and its components.
-- **Instructions**: How to build, test and run the application.
-- **Design Decisions**: Explanation of key design decisions.
-- **Usage Examples**: Examples of how to use the application.
-- **Testing**: How to run the tests and an overview of the test coverage.
+This library was built from the ground up with functional programming principles at its core. The following design decisions were made to align with the course's learning objectives and the grading criteria.
 
-## Grading Criteria
+### 1. Immutability and Pure Functions
 
-- **Implementation Behavior**: Correct and expected functionality of the implemented features.
-- **Functional Programming Principles**: Adherence to functional programming paradigms.
-- **Test Coverage**: Comprehensive unit tests covering all implemented features.
-- **Project Organization**: Clear and logical project structure.
-- **Documentation Quality**: Completeness and clarity of the documentation.
+The most fundamental design choice is that all data structures are **immutable**.
 
-**Project Deadline: Friday, 18 July 2025**
+*   **Data Structures**: The `DirectedGraph` and `UndirectedGraph` are implemented as `case class`es. All their fields are `val`s.
+*   **Operations**: Methods that modify the graph, such as `addEdge(u, v, w)` or `removeEdge(u, v)`, do not change the existing graph instance. Instead, they return a **new graph instance** containing the specified modification.
 
-Good luck with your project! If you have any questions, please don't hesitate to ask.
+    *Example (`DirectedGraph.scala`):*
+    ```scala
+    override def addEdge(u: A, v: A, w: Double): Graph[A] =
+      val nbrs = adj.getOrElse(u, Map.empty)
+      // .updated returns a new Map, which is used to create a new DirectedGraph
+      DirectedGraph(adj.updated(u, nbrs.updated(v, w)))
+    ```
+
+*    This approach guarantees that our functions are **pure** (free of side effects), which leads to code that is:
+  *   **Predictable and Easy to Reason About**: A given graph value will never change, eliminating entire classes of bugs related to state mutation.
+  *   **Thread-Safe**: Immutable data can be safely shared across multiple threads without locks or synchronization, making it ideal for concurrent applications.
+
+### 2. Algebraic Data Types (ADTs) and Generics
+
+The graph structure is defined using an ADT, a core pattern in functional programming for modeling data.
+
+*   **`trait Graph[A]`**: A `trait` defines the common interface, establishing a contract for all graph implementations.
+*   **`case class DirectedGraph[A]` / `case class UndirectedGraph[A]`**: These are the concrete implementations, representing the "is a" relationship (`DirectedGraph` is a `Graph`).
+*   **Generics `[A]`**: The entire library is parameterized by type `A`. This is **parametric polymorphism**, allowing the graph to store vertices of any type (`Int`, `String`, custom case classes like `City`, etc.) without sacrificing type safety.
+
+### 3. Functional Algorithms and Tail Recursion
+
+All graphs traversal and search algorithms are implemented as pure functions in the `GraphOperations` object.
+
+*   **`@tailrec`**: All recursive helper functions (e.g., `depthSearcherHelper`, `dijkstraHelper`) are annotated with `@tailrec`. This instructs the Scala compiler to verify that the recursion is in tail position.
+*   The compiler performs **tail-call optimization**, converting the recursion into a loop at the bytecode level. This prevents `StackOverflowError` for large graphs and allows for processing arbitrary-sized inputs with constant stack space, which is the functional equivalent of using `while` loops in imperative programming.
+
+### 4. Separation of Data and Operations
+
+The graph algorithms (DFS, Dijkstra, etc.) are **not** methods on the `Graph` trait itself. They reside in a separate `object GraphOperations`.
+
+*    This design choice promotes modularity and adheres to the "Open-Closed Principle." The core `Graph` data structure is "closed" for modification but "open" for extension. We can easily add new algorithms in the future (e.g., A\*, Floyd-Warshall) without ever touching the `Graph.scala` or `DirectedGraph.scala` files. It keeps the data structure focused on representing data, and the operations focused on processing it.
+
+### 5. Asynchronous & Concurrent Programming with ZIO
+
+The interactive application is built with ZIO to handle all side effects, such as reading from and writing to the console.
+
+*   **IO Monad**: ZIO wraps effects in a data type, `ZIO[R, E, A]`. This turns side effects into pure, functional values that can be composed and manipulated.
+*   **For-Comprehensions**: The main application logic in `Main.scala` is structured as a `for`-comprehension, which provides a clean, sequential-looking way to compose asynchronous operations.
+
+    *Example (`Main.scala`):*
+    ```scala
+    for {
+      _    <- printLine("Enter command:")
+      line <- readLine
+      // ... process line ...
+    } yield ()
+    ```
+*   **State Management**: The application loop `loop(graph: Graph[String])` is also purely functional. Instead of mutating a global graph variable, each command that modifies the graph recursively calls the `loop` function with the **new graph** as a parameter.
+
+### 6. Extensibility via Type Classes and Extensions
+
+The library is made extensible without modifying core code.
+
+*   **JSON Serialization**: `JsonCodecs.scala` uses the type class pattern with `implicit` `JsonEncoder` and `JsonDecoder` instances. This allows any `Graph[A]` to be serialized to JSON, provided a codec exists for the vertex type `A`.
+*   **GraphViz Representation**: `GraphViz.scala` uses a Scala 3 `extension` method, `toDot`, to add visualization functionality directly to the `Graph` type without needing to place the method inside the `Graph` trait itself.
+
+## Instructions for Building and Running
+
+### Prerequisites
+
+*   [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/downloads/) version 11 or newer.
+*   [SBT (Simple Build Tool)](https://www.scala-sbt.org/download.html) installed.
+
+### Build and Test
+
+1.  Clone the repository to your local machine.
+2.  Open a terminal or command prompt in the project's root directory.
+3.  Launch the SBT interactive shell:
+    ```bash
+    sbt
+    ```
+4.  Inside the SBT shell, you can run the following commands:
+  *   **Compile all modules**:
+      ```sbt
+      compile
+      ```
+  *   **Run all tests**: The tests are located in the `core` module and use ScalaTest.
+      ```sbt
+      test
+      ```
+
+### Run the Interactive Application
+
+1.  While inside the SBT shell, first compile the code:
+    ```sbt
+    compile
+    ```
+2.  Switch the scope to the application project:
+    ```sbt
+    project app
+    ```
+3.  Run the main class:
+    ```sbt
+    run
+    ```
+
+The application will start, and you will see the command prompt, ready to accept commands to build and query your graph.
+
+## Application Usage and Commands
+
+The interactive console allows you to build a directed graph of `String` vertices and run algorithms on it.
+
+Once the application is running, you can enter any of the following commands. Arguments should be separated by spaces.
+
+#### Graph Modification Commands
+
+*   `add <u> <v> <w>`
+  *   **Description**: Adds a directed edge from vertex `u` to vertex `v` with a weight `w`. If the vertices do not exist, they will be created automatically.
+  *   **Example**: `add Paris London 95.5`
+
+*   `remove <u> <v>`
+  *   **Description**: Removes the directed edge from vertex `u` to vertex `v`.
+  *   **Example**: `remove Paris London`
+
+#### Graph Inspection Commands
+
+*   `show vertices`
+  *   **Description**: Displays a set of all unique vertices currently in the graph.
+
+*   `show edges`
+  *   **Description**: Displays a set of all edges in the graph, represented as `(source, destination, weight)` tuples.
+
+#### Algorithm Commands
+
+*   `dfs <u>`
+  *   **Description**: Performs a Depth-First Search starting from vertex `u` and prints the traversal path.
+  *   **Example**: `dfs Paris`
+
+*   `bfs <u>`
+  *   **Description**: Performs a Breadth-First Search starting from vertex `u` and prints the traversal path.
+  *   **Example**: `bfs Paris`
+
+*   `cycle?`
+  *   **Description**: It checks the entire graph for the presence of at least one cycle using a three-color DFS algorithm. Prints `true` if a cycle is found, otherwise `false`.
+
+*   `dijkstra <u>`
+  *   **Description**: Calculates the shortest path from the starting vertex `u` to all other reachable vertices using Dijkstra's algorithm. The output is a map where each key is a reachable destination, and its value is a tuple of `(total_weight, predecessor_vertex)`.
+  *   **Example**: `dijkstra Paris`
+
+#### Application Control
+
+*   `exit`
+  *   **Description**: Exits the application.
+
+## Testing Strategy
+
+The project emphasizes robust testing to ensure the correctness of the core library. A comprehensive test suite is provided to cover all major features.
+
+*   **Unit Tests (`GraphSpec.scala`)**: This suite validates the fundamental behavior of the graph data structures (`DirectedGraph`, `UndirectedGraph`). It ensures that adding, removing, and querying edges and vertices works as expected. It also contains tests for the JSON and GraphViz utility extensions, confirming that serialization and visualization outputs are correct.
+
+*   **Algorithm Tests (`GraphOperationsSpec.scala`)**: This suite contains a dedicated set of tests for each implemented algorithm (DFS, BFS, Cycle Detection, and Dijkstra's). These tests use well-defined graphs, including standard textbook examples and specific edge cases, to assert the correctness of the results. Scenarios tested include cyclic graphs, disconnected graphs, and graphs with no outgoing edges.
+
+*   **Application Tests (`AppSpec.scala`)**: A simple test is included to demonstrate how to test ZIO applications. It verifies that the `demo` effect in `Main.scala` runs to completion without any unexpected errors, ensuring the basic integration of the ZIO application is sound.
+
+*   **Test Frameworks**:
+  *   **ScalaTest**: Used for writing expressive and readable tests in a BDD (Behavior-Driven Development) style via `AnyFlatSpec` and its rich set of matchers.
+  *   **ZIO Test**: Used for testing the ZIO application, integrating seamlessly with the ZIO runtime.
